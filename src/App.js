@@ -21,7 +21,6 @@ const App = () => {
   //messageBox related state
 
   const screenRef = useRef();
-  console.log(messageSelectedInWheel)
   useEffect(() => {
     const data = [
       {
@@ -233,7 +232,8 @@ const App = () => {
 
         if(dist>10){
           const messageSelected = Math.ceil(messageWheelAngle(buttonTouchData.startX,buttonTouchData.startY,touch.clientX,touch.clientY)/angleForEachSection)
-          if(messageSelected !== messageSelectedInWheel) setMessageSelectedInWheel(messageSelected)
+          const buttonTouchData1 = buttonTouchData
+          if(buttonTouchData.messageToBeSelected !== messageSelected) setButtonTouchData({...buttonTouchData1,messageToBeSelected:messageSelected})
         }
       }
     }
@@ -242,6 +242,7 @@ const App = () => {
   const messageButtonTouchEnd = (e) => {
     e.stopPropagation()
     setShowMessageWheel(false)
+    setMessageSelectedInWheel(buttonTouchData.messageToBeSelected)
     setButtonTouchData({})
   }
   // message button code ends here
